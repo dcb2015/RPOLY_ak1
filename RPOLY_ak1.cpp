@@ -1,6 +1,6 @@
 // RPOLY_ak1.cpp - Program for calculating the roots of a polynomial of real coefficients.
 // Written in Microsoft Visual Studio Community 2019
-// 23 February 2020
+// 26 February 2020
 //
 // The sub-routines listed below are translations of the FORTRAN routines included in RPOLY.FOR,
 // posted off the NETLIB site as TOMS/493:
@@ -795,7 +795,7 @@ int main()
 {
 	char rflag = 0; //Readiness flag
 
-	cout << "                                           rpoly_ak1 (23 February 2020)\n";
+	cout << "                                           rpoly_ak1 (26 February 2020)\n";
 	cout << "=========================================================================== \n";
 	cout << "This program calculates the roots of a polynomial of real coefficients:\n";
 	cout << "\nop[0]*x^N + op[1]*x^(N-1) + op[2]*x^(N-2) + . . . + op[N]*x^0 = 0 \n";
@@ -864,7 +864,7 @@ int main()
 
 		//Input the polynomial coefficients from the file and put them in the op vector
 
-		for (i = 0; i < (Degree + 1); ++i) in >> op[i];
+		for (i = 0; i <= Degree; ++i) in >> op[i];
 		in.close(); //Close the input file
 
 		rpoly_ak1(op, &Degree, zeror, zeroi);
