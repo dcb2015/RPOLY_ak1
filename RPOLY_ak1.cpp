@@ -60,8 +60,8 @@ void rpoly_ak1(double op[MDP1], int* Degree, double zeror[MAXDEGREE], double zer
 	const double RADFAC = 3.14159265358979323846 / 180; // Degrees-to-radians conversion factor = pi/180
 	const double lb2 = log(2.0); // Dummy variable to avoid re-calculating this value in loop below
 	const double lo = FLT_MIN / DBL_EPSILON;
-	const double cosr = cos(94.0 * RADFAC); // = -0.069756474
-	const double sinr = sin(94.0 * RADFAC); // = 0.99756405
+	const double cosr = cos(94.0 * RADFAC);
+	const double sinr = sin(94.0 * RADFAC);
 
 	if ((*Degree) > MAXDEGREE) {
 		cout << "\nThe entered Degree is greater than MAXDEGREE. Exiting rpoly. No further action taken.\n";
