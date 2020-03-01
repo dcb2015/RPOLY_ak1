@@ -1,6 +1,6 @@
 // RPOLY_ak1.cpp - Program for calculating the roots of a polynomial of real coefficients.
 // Written in Microsoft Visual Studio Community 2019
-// 26 February 2020
+// 1 March 2020
 //
 // The sub-routines listed below are translations of the FORTRAN routines included in RPOLY.FOR,
 // posted off the NETLIB site as TOMS/493:
@@ -50,7 +50,8 @@ void Quad_ak1(double a, double b1, double c, double* sr, double* si, double* lr,
 
 void rpoly_ak1(double op[MDP1], int* Degree, double zeror[MAXDEGREE], double zeroi[MAXDEGREE]) {
 
-	int i, j, jj, l, N, NM1, NN, NZ, zerok;
+	int i, j, jj, l, N, NM1, NN, NZ;
+	bool zerok;
 
 	double K[MDP1], p[MDP1], pt[MDP1], qp[MDP1], temp[MDP1];
 	double bnd, df, dx, factor, ff, moduli_max, moduli_min, sc, x, xm;
@@ -125,9 +126,7 @@ void rpoly_ak1(double op[MDP1], int* Degree, double zeror[MAXDEGREE], double zer
 				sc = ((sc == 0) ? FLT_MIN : sc);
 				l = (int)(log(sc) / lb2 + 0.5);
 				factor = pow(2.0, l);
-				if (factor != 1.0) {
-					for (i = 0; i < NN; ++i)   p[i] *= factor;
-				} // End if (factor != 1.0)
+				if (factor != 1.0) for (i = 0; i < NN; ++i)   p[i] *= factor;
 			} // End if (((sc <= 1.0) && (moduli_max >= 10)) || ((sc > 1.0) && (FLT_MAX/sc >= moduli_max)))
 
 			// Compute lower bound on moduli of zeros
@@ -795,7 +794,7 @@ int main()
 {
 	char rflag = 0; //Readiness flag
 
-	cout << "                                           rpoly_ak1 (26 February 2020)\n";
+	cout << "                                           rpoly_ak1 (1 March 2020)\n";
 	cout << "=========================================================================== \n";
 	cout << "This program calculates the roots of a polynomial of real coefficients:\n";
 	cout << "\nop[0]*x^N + op[1]*x^(N-1) + op[2]*x^(N-2) + . . . + op[N]*x^0 = 0 \n";
@@ -879,9 +878,7 @@ int main()
 			out.precision(DBL_DIG);
 			out << "The roots follow:\n";
 			out << "\n";
-			for (i = 0; i < Degree; ++i) {
-				out << zeror[i] << " + " << zeroi[i] << "i" << " \n";
-			}//End for i
+			for (i = 0; i < Degree; ++i) out << zeror[i] << " + " << zeroi[i] << "i" << " \n";
 		} // End else Degree > 0
 
 		out.close(); // Close the output file
