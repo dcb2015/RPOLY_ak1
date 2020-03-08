@@ -1,6 +1,6 @@
 // RPOLY_ak1.cpp - Program for calculating the roots of a polynomial of real coefficients.
 // Written in Microsoft Visual Studio Community 2019
-// 1 March 2020
+// 8 March 2020
 //
 // The sub-routines listed below are translations of the FORTRAN routines included in RPOLY.FOR,
 // posted off the NETLIB site as TOMS/493:
@@ -123,7 +123,7 @@ void rpoly_ak1(double op[MDP1], int* Degree, double zeror[MAXDEGREE], double zer
 			sc = lo / moduli_min;
 
 			if (((sc <= 1.0) && (moduli_max >= 10)) || ((sc > 1.0) && (FLT_MAX / sc >= moduli_max))) {
-				sc = ((sc == 0) ? FLT_MIN : sc);
+				if (sc == 0) sc = FLT_MIN;
 				l = (int)(log(sc) / lb2 + 0.5);
 				factor = pow(2.0, l);
 				if (factor != 1.0) for (i = 0; i < NN; ++i)   p[i] *= factor;
@@ -132,23 +132,23 @@ void rpoly_ak1(double op[MDP1], int* Degree, double zeror[MAXDEGREE], double zer
 			// Compute lower bound on moduli of zeros
 
 			for (i = 0; i < NN; ++i)   pt[i] = fabs(p[i]);
-			pt[N] = -(pt[N]);
 
 			NM1 = N - 1;
 
 			// Compute upper estimate of bound
 
-			x = exp((log(-pt[N]) - log(pt[0])) / (double)N);
+			xm = exp((log(pt[N]) - log(pt[0])) / (double)N);
 
 			if (pt[NM1] != 0) {
 				// If Newton step at the origin is better, use it
-				xm = -pt[N] / pt[NM1];
-				x = ((xm < x) ? xm : x);
+				x = pt[N] / pt[NM1];
+				if (x < xm) xm = x;
 			} // End if (pt[NM1] != 0)
+			
+			pt[N] = -(pt[N]);
 
 			// Chop the interval (0, x) until ff <= 0
 
-			xm = x;
 			do {
 				x = xm;
 				xm = 0.1 * x;
@@ -794,7 +794,7 @@ int main()
 {
 	char rflag = 0; //Readiness flag
 
-	cout << "                                           rpoly_ak1 (1 March 2020)\n";
+	cout << "                                           rpoly_ak1 (8 March 2020)\n";
 	cout << "=========================================================================== \n";
 	cout << "This program calculates the roots of a polynomial of real coefficients:\n";
 	cout << "\nop[0]*x^N + op[1]*x^(N-1) + op[2]*x^(N-2) + . . . + op[N]*x^0 = 0 \n";
