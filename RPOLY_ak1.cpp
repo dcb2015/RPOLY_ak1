@@ -281,10 +281,11 @@ void Fxshfr_ak1(int L2, int* NZ, double sr, double bnd, double K[MDP1], int N, d
 	// L2 limit of fixed shift steps
 	// NZ number of zeros found
 
-	int fflag, i, j, spass, stry, tFlag, vpass, vtry;
+	int i, j, tFlag;
+	bool fflag, iFlag, spass, stry, vpass, vtry;
+	
 	double a, a1, a3, a7, b, betas, betav, c, d, e, f, g, h, oss, ots, otv, ovv, s, ss, ts, tss, tv, tvv, u, ui, v, vi, vv;
 	double qk[MDP1], svk[MDP1];
-	bool iFlag;
 
 	*NZ = 0;
 	betav = betas = 0.25;
@@ -316,8 +317,8 @@ void Fxshfr_ak1(int L2, int* NZ, double sr, double bnd, double K[MDP1], int N, d
 
 			// Compute relative measures of convergence of s and v sequences
 
-			tv = ((vv != 0.0) ? fabs((vv - ovv) / vv) : tv);
-			ts = ((ss != 0.0) ? fabs((ss - oss) / ss) : ts);
+			if (vv != 0.0) tv = fabs((vv - ovv) / vv);
+			if (ss != 0.0) ts = fabs((ss - oss) / ss);
 
 			// If decreasing, multiply the two most recent convergence measures
 
