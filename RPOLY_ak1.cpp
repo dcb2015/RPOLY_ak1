@@ -1,6 +1,6 @@
 // RPOLY_ak1.cpp - Program for calculating the roots of a polynomial of real coefficients.
 // Written in Microsoft Visual Studio Community 2019
-// 15 March 2020
+// 20 March 2020
 //
 // The sub-routines listed below are translations of the FORTRAN routines included in RPOLY.FOR,
 // posted off the NETLIB site as TOMS/493:
@@ -466,7 +466,7 @@ int calcSC_ak1(int N, double a, double b, double* a1, double* a3, double* a7, do
 		*a7 = (*h) + ((*f) + u) * a;
 	} // End if(fabs(d) >= fabs(c))
 	else {
-		dumFlag = 1; // TYPE = 1 indicates that all formulas are divided by c;
+		dumFlag = 1; // TYPE = 1 indicates that all formulas are divided by c
 		*e = a / (*c);
 		*f = (*d) / (*c);
 		*g = (*e) * u;
@@ -697,7 +697,7 @@ void RealIT_ak1(bool* iFlag, int* NZ, double* sss, int N, double p[MDP1], int NN
 
 		if (j >= 2) {
 			if ((fabs(t) <= 0.001 * fabs(-t + s)) && (mp > omp)) {
-				// A cluster of zeros near the real axis has been encountered;
+				// A cluster of zeros near the real axis has been encountered.
 				// Return with iFlag set to initiate a quadratic iteration
 
 				*iFlag = 1;
@@ -751,7 +751,7 @@ void Quad_ak1(double a, double b1, double c, double* sr, double* si, double* lr,
 	*sr = *si = *lr = *li = 0.0;
 
 	if (a == 0) {
-		*sr = ((b1 != 0) ? -(c / b1) : *sr);
+		if (b1 != 0) *sr = -(c / b1);
 		return;
 	} // End if (a == 0))
 
@@ -775,10 +775,9 @@ void Quad_ak1(double a, double b1, double c, double* sr, double* si, double* lr,
 
 	if (e >= 0) {
 		// Real zeros
-
-		d = ((b >= 0) ? -d : d);
+		if (b >= 0) d = -d;
 		*lr = (-b + d) / a;
-		*sr = ((*lr != 0) ? (c / (*lr)) / a : *sr);
+		if (*lr != 0) *sr = (c / (*lr)) / a;
 	} // End if (e >= 0)
 	else { // Else (e < 0)
 		// Complex conjugate zeros
@@ -795,7 +794,7 @@ int main()
 {
 	char rflag = 0; //Readiness flag
 
-	cout << "                                           rpoly_ak1 (15 March 2020)\n";
+	cout << "                                           rpoly_ak1 (20 March 2020)\n";
 	cout << "=========================================================================== \n";
 	cout << "This program calculates the roots of a polynomial of real coefficients:\n";
 	cout << "\nop[0]*x^N + op[1]*x^(N-1) + op[2]*x^(N-2) + . . . + op[N]*x^0 = 0 \n";
