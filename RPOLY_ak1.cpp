@@ -781,7 +781,6 @@ void Quad_ak1(double a, double b1, double c, double* sr, double* si, double* lr,
 	} // End if (e >= 0)
 	else { // Else (e < 0)
 		// Complex conjugate zeros
-
 		*lr = *sr = -(b / a);
 		*si = fabs(d / a);
 		*li = -(*si);
