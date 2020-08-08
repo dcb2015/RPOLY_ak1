@@ -1,6 +1,6 @@
 // RPOLY_ak1.cpp - Program for calculating the roots of a polynomial of real coefficients.
 // Written in Microsoft Visual Studio Community 2019
-// 20 March 2020
+// 6 August 2020
 //
 // The sub-routines listed below are translations of the FORTRAN routines included in RPOLY.FOR,
 // posted off the NETLIB site as TOMS/493:
@@ -563,7 +563,7 @@ void QuadIT_ak1(int N, int* NZ, double uu, double vv, double* szr, double* szi, 
 
 	int i, j = 0, tFlag;
 	double c, ee, mp, omp, relstp, t, u, ui, v, vi, zm;
-	bool triedFlag = 0;
+	bool triedFlag = 1;
 
 	*NZ = 0; // Number of zeros found
 	u = uu; // uu and vv are coefficients of the starting quadratic
@@ -606,8 +606,8 @@ void QuadIT_ak1(int N, int* NZ, double uu, double vv, double* szr, double* szi, 
 		// Stop iteration after 20 steps
 		if (j > 20)   break;
 
-		if (j >= 2) {
-			if ((relstp <= 0.01) && (mp >= omp) && (!triedFlag)) {
+		if (j > 1) {
+			if ((triedFlag) && (relstp <= 0.01) && (mp >= omp)) {
 				// A cluster appears to be stalling the convergence. Five fixed shift
 				// steps are taken with a u, v close to the cluster.
 
@@ -623,12 +623,12 @@ void QuadIT_ak1(int N, int* NZ, double uu, double vv, double* szr, double* szi, 
 					nextK_ak1(N, tFlag, *a, *b, *a1, a3, a7, K, qk, qp);
 				} // End for i
 
-				triedFlag = 1;
+				triedFlag = 0;
 				j = 0;
 
-			} // End if ((relstp <= 0.01) && (mp >= omp) && (!triedFlag))
+			} // End if ((triedFlag) && (relstp <= 0.01) && (mp >= omp))
 
-		} // End if (j >= 2)
+		} // End if (j > 1)
 
 		omp = mp;
 
@@ -793,7 +793,7 @@ int main()
 {
 	char rflag = 0; //Readiness flag
 
-	cout << "                                           rpoly_ak1 (20 March 2020)\n";
+	cout << "                                           rpoly_ak1 (6 August 2020)\n";
 	cout << "=========================================================================== \n";
 	cout << "This program calculates the roots of a polynomial of real coefficients:\n";
 	cout << "\nop[0]*x^N + op[1]*x^(N-1) + op[2]*x^(N-2) + . . . + op[N]*x^0 = 0 \n";
