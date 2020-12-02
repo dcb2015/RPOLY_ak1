@@ -364,12 +364,8 @@ void Fxshfr_ak1(int L2, int* NZ, double sr, double bnd, double K[MDP1], int N, d
 						betav *= 0.25;
 
 						// Try linear iteration if it has not been tried and the s sequence is converging
-						if (stry || (!spass)) {
-							iFlag = 0;
-						} // End if (stry || (!spass))
-						else {
-							for (i = 0; i < N; ++i)   K[i] = svk[i];
-						} // End if (stry || !spass)
+						if (stry || (!spass)) iFlag = 0;
+						else for (i = 0; i < N; ++i)   K[i] = svk[i];
 
 					} // End else !fflag
 
